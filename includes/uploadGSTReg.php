@@ -12,7 +12,7 @@ if(isset($_SESSION['recId']))
 		$test = explode('.', $_FILES["file"]["name"]);
 		$ext = end($test);
 		$name = $_FILES['file']['name'];
-		$location = '../documents/recruiter/GST Registration/'.$name;
+		$location = '../documents/recruiter/GST registration/'.$name;
 
 		$fetch_doc="SELECT * FROM recruiter_docs WHERE recruiter_id='$SESSION' AND document_type='GST registration'";
 		$res_doc=mysqli_query($conn,$fetch_doc);
@@ -28,7 +28,7 @@ if(isset($_SESSION['recId']))
 			mysqli_query($conn,$query);
 		}
 
-		move_uploaded_file($_FILES["file"]["tmp_name"], $location);
+		move_uploaded_file($_FILES["file"]["tmp_name"],$location);
 
 		echo '<b><b class="text-success">File uploaded successfully.</b></b>';
 	}

@@ -61,7 +61,7 @@ if(isset($_SESSION['otp']))
 										</div>
 									</div>
 								</body>
-								</html>';
+								</html>'; 
 
 			    $mail->send();
 

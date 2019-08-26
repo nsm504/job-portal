@@ -28,7 +28,7 @@ if(isset($_SESSION['userId']))
 			mysqli_query($conn,$query);
 		}
 
-		move_uploaded_file($_FILES["file"]["tmp_name"], $location);
+		move_uploaded_file($_FILES["file"]["tmp_name"],$location);
 
 		echo '<b><b class="text-success">File uploaded successfully.</b></b>';
 	}

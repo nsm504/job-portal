@@ -7,7 +7,7 @@ if(isset($_SESSION['userId']))
 {
 	$SESSION = $_SESSION['userId'];
 
-	if($_FILES["file"]["name"] != '')
+	if($_FILES["file"]["name"] != '') 
 	{
 		$test = explode('.', $_FILES["file"]["name"]);
 		$ext = end($test);
@@ -32,4 +32,4 @@ if(isset($_SESSION['userId']))
 
 		echo '<b><b class="text-success">File uploaded successfully.</b></b>';
 	}
-}
+} 

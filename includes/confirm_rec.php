@@ -65,7 +65,7 @@ if(isset($_SESSION['otp']))
 			    $mail->send();
 
 			    echo '<p>Your account has been confirmed. You can log in and use your account.</p>
-						<a href="../job-revised/recruiter/recdocs.php" style="margin-left:40%;" align="center" class="primary-btn mt-20 text-white">Click to submit your verification documents.
+						<a href="../job-portal/recruiter/recdocs.php" style="margin-left:40%;" align="center" class="primary-btn mt-20 text-white">Click to submit your verification documents.
 						</a>
 						<br><br><br><br>';
 

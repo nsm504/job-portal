@@ -25,7 +25,7 @@ if(isset($_SESSION['u_id']))
 		$syear= htmlspecialchars(mysqli_real_escape_string($conn,$_POST['syear']));
 
 
-			if(empty($spec) || empty($uni)  || empty($pyear) || empty($perc) || empty($hperc) || empty($hboard) || empty($hyear) || empty($sperc) || empty($sboard) || empty($syear))
+			if(empty($hperc) || empty($hboard) || empty($hyear) || empty($sperc) || empty($sboard) || empty($syear))
 			{
 
 

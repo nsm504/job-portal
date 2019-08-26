@@ -12,7 +12,7 @@ if(isset($_SESSION['recId']))
 		$test = explode('.', $_FILES["file"]["name"]);
 		$ext = end($test);
 		$name = $_FILES['file']['name'];
-		$location = '../documents/recruiter/MSME Registration/'.$name;
+		$location = '../documents/recruiter/MSME registration/'.$name;
 
 		$fetch_doc="SELECT * FROM recruiter_docs WHERE recruiter_id='$SESSION' AND document_type='MSME registration'";
 		$res_doc=mysqli_query($conn,$fetch_doc);

@@ -32,4 +32,4 @@ if(isset($_SESSION['userId']))
 
 		echo '<b><b class="text-success">File uploaded successfully.</b></b>';
 	}
-}
+} 
