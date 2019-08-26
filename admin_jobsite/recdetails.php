@@ -71,7 +71,7 @@ else
  							{
  								$doc= $disp["document_type"];
  								$name= $disp["name"];
- 						 ?>
+ 						?>
  						 	<tr>
  						 		<td width="50%"><b><b class="text-dark"><?php echo $doc; ?></b></b></td>
  						 		<td width="70%"><?php echo '<a href="../documents/recruiter/'.$doc.'/'.$name.'" target="_blank">'.$disp["name"].'</a>  ' ?></td>
@@ -83,7 +83,7 @@ else
  				</div>
  			</div>
 
- 		</div>
+ 		</div> 
  	</div>
 </section>
 
