@@ -180,7 +180,7 @@
 										while($row = mysqli_fetch_array($result)) 
 										{ 
 											$user_id=$row["user_id"];
-											$sql2= "SELECT name FROM user_docs WHERE user_id='$user_id' ORDER BY id DESC LIMIT 1 ";
+											$sql2= "SELECT name FROM user_docs WHERE user_id='$user_id' AND document_type='resume' ORDER BY id DESC LIMIT 1 ";
 											$result2 = mysqli_query($conn,$sql2);
 											$row2 = mysqli_fetch_array($result2);
 

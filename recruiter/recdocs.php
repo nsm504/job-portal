@@ -32,6 +32,7 @@
 			<div class="row">
 				<div class="col-lg-4 sidebar">
 					<div class="single-slidebar">
+						<?php echo $rid; ?>
 					<h4 class="text-dark">Instructions For Uploading documents</h4>
 					<div>
 						<p><b class="text-dark">1. All documents to be uploaded in either .pdf,.doc,.docx or .rtf format only.</b></p>
