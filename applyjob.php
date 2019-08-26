@@ -6,10 +6,10 @@ include 'nav.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require_once 'mailing/vendor/autoload.php';			/* Load PHPMailer class */
+require_once 'mailing/vendor/autoload.php';
 $mail= new PHPMailer(true);
 
-if(!isset($_SESSION['u_id']))				/* Check if candidate is logged in, if false, then alert */
+if(!isset($_SESSION['u_id']))
 {
 	$jid=$_GET['id'];
 	header("Location: viewjob.php?id=$jid&job=signin");
@@ -19,30 +19,30 @@ else
 	$SESSION=$_SESSION['u_id'];
 	include 'includes/dbh.inc.php';
 
-	$job=$_GET['id'];								/* Acquire job_id from URL */
-	$jid=base64_decode($_GET['id']);				/* Decrypt job_id */
+	$job=$_GET['id'];
+	$jid=base64_decode($_GET['id']);
 
-	$app_fetch="SELECT * FROM applications WHERE job_id='$jid' AND user_id='$SESSION'";  
+	$app_fetch="SELECT * FROM applications WHERE job_id='$jid' AND user_id='$SESSION'";
 	$app_query=mysqli_query($conn,$app_fetch);
 
-	if(mysqli_num_rows($app_query)>0) 			/* Check if candidate has already applied for the job */
+	if(mysqli_num_rows($app_query)>0)
 	{
 		header("Location: viewjob.php?id=$job&job=rpt");
 	}
 	else 
 	{
-		$verified="SELECT * FROM user WHERE account_status='Verified' AND user_id='$SESSION'";
+		$verified= "SELECT * FROM user WHERE account_status='Verified' AND user_id='$SESSION'";
 		$res_query=mysqli_query($conn,$verified);
 
-		if(mysqli_num_rows($res_query)==0)		/* Check if candidate applying is a verfied one */
+		if(mysqli_num_rows($res_query)==0)
 		{
 			header("Location: viewjob.php?id=$job&job=res");
 		}
 		else
 		{
-			$date = date('Y-m-d H:i:s');		/* Set date of application to current datetime */
+			$date = date('Y-m-d H:i:s');
 
-			$sql2="SELECT user_first,user_last,user_email FROM user WHERE user_id='$SESSION'";
+			$sql2="SELECT user_first,user_last,user_email,highest_qualification,course,specialization,university,passing_year,percentage,skills FROM details INNER JOIN user ON details.user_id=user.user_id WHERE user.user_id='$SESSION'";
 			$result2=mysqli_query($conn,$sql2);
 
 			$sql3="SELECT joblist.recruiter_id,joblist.job_title,joblist.company,recruiter.recruiter_first,recruiter.recruiter_last,recruiter.recruiter_email FROM joblist INNER JOIN recruiter ON joblist.recruiter_id=recruiter.recruiter_id WHERE job_id='$jid'";
@@ -56,6 +56,13 @@ else
 				$first=$row2["user_first"];
 				$last=$row2["user_last"];
 				$user_email=$row2["user_email"];
+				$highest_qualification= $row2["highest_qualification"];
+				$course= $row2["course"];
+				$specialization= $row2["specialization"];
+				$university= $row2["university"];
+				$passing_year= $row2["passing_year"];
+				$percentage= $row2["percentage"];
+				$skills= $row2["skills"];
 			}
 
 			while($row3=mysqli_fetch_array($result3))
@@ -67,12 +74,22 @@ else
 			}
 
 			
-			$query="INSERT INTO applications(user_id,job_id,recruiter_id,status,app_date) VALUES('$SESSION','$jid','$rid','pending','$date')";		/*Insert values into 'applications' table*/
+			$query="INSERT INTO applications(user_id,job_id,recruiter_id,highest_qualification,course,specialization,university,passing_year,percentage,skills,status,app_date) VALUES('$SESSION','$jid','$rid','$highest_qualification','$course','$specialization','$university','$passing_year','$percentage','$skills','pending','$date')";
 
 			$query_output=mysqli_query($conn,$query);
 
-			try  /* Send email to recruiter who posted this job about application by candidate */
-			{	
+			try{
+
+				    //Server settings
+			    /*$mail->SMTPDebug = 1;                                       // Enable verbose debug output
+			    $mail->isSMTP();                                            // Set mailer to use SMTP
+			    $mail->Host       = 'smtp.sendgrid.net';                    // Specify main and backup SMTP servers
+			    $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+			    $mail->Username   = 'user@example.com';                     // SMTP username
+			    $mail->Password   = 'secret';                               // SMTP password
+			    $mail->SMTPSecure = 'tls';                                  // Enable TLS encryption, `ssl` also accepted
+			    $mail->Port       = 587;            */                        // TCP port to connect to
+				
 				$mail->setFrom('proactivecba@gmail.com','Proactive Jobs');
 				$mail->addAddress($rec_email,$row3["recruiter_first"].' '.$row3["recruiter_last"]);
 				$mail->addReplyTo($user_email,$first.' '.$last);
@@ -105,13 +122,12 @@ else
 			}
 			
 			
-			$notif="INSERT INTO notifications(sender_id,receiver_id,job_id,name,type,message,status,notif_date) VALUES('$SESSION','$rid','$jid','$first','Job Application','$first $last has applied for job of $title','unread','$date')";																					/* Insert values into 'notifications' table to display the same in 	recruiters home page */
+			$notif="INSERT INTO notifications(sender_id,receiver_id,job_id,name,type,message,status,notif_date) VALUES('$SESSION','$rid','$jid','$first','Job Application','$first $last has applied for job of $title','unread','$date')";
 
 
 			$query_notif=mysqli_query($conn,$notif);
 
-			header("Location: viewjob.php?id=$job&job=applied");	
-			/*Redirect to viewjob page and display success result */
+			header("Location: viewjob.php?id=$job&job=applied");
 		}
 	}
 }
