@@ -9,7 +9,7 @@
 		<div class="container">
 			<div class="row align-items-center justify-content-between d-flex">
 				<div id="logo">
-				    <a href="index.php"><img src="img/plogo.png" alt="" title="" /></a>
+				    <a href="index.php"><img class="logo-header" src="img/logo-new.png" alt="" title="" /></a>
 				</div>
 
 				<nav style="margin-right:50px;" id="nav-menu-container">
