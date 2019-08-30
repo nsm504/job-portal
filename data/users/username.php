@@ -1,6 +1,6 @@
 <?php 
 
- 					 include 'dbh.inc.php';
+ 					
 
  					if(isset($_SESSION['u_id'])){
  						$SESSION = $_SESSION['u_id'];
